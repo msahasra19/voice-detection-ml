@@ -1,22 +1,16 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": [
-          "app/**",
-          "static/**",
-          "training/ablation_results.json"
-        ]
-      }
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": "app/**|static/**|training/ablation_results.json",
+      "excludeFiles": "tests/**|*.md|dataset/**|training/dataset/**|*.wav|*.mp3"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/api/index.py"
+      "source": "/(.*)",
+      "destination": "/api/index.py"
     }
   ]
 }
